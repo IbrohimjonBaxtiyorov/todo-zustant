@@ -29,7 +29,7 @@ const useTodoStore = create((set) => ({
   },
 
   setLoading: (loading) => set({ loading }),
-  setfilter: (filter) => set({ filter }),
+  setFilter: (filter) => set({ filter }),
   setAddModal: () => {
     set((state) => ({ addModal: !state.addModal }));
   },
