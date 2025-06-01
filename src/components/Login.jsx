@@ -5,11 +5,10 @@ import { toast } from "sonner";
 import { loginValidation } from "../lib/utils";
 import { login } from "../request";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { setUser } from "../lib/redux-toolkit/slices/todo-slice";
+import useTodoStore from "../lib/zustant";
 
 export default function Login() {
-  const dispatch = useDispatch();
+  const { setUser } = useTodoStore();
   const [loading, setLoading] = useState(false);
   function handleSubmit(e) {
     e.preventDefault();
@@ -30,7 +29,7 @@ export default function Login() {
       login(sendData)
         .then(
           (res) => {
-            dispatch(setUser(res));
+            setUser(res);
             toast.success("Login qildingiz");
           },
           ({ message }) => {

@@ -6,17 +6,14 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import AddNewTodoForm from "./AddNewTodoForm";
-import { useDispatch, useSelector } from "react-redux";
-import { setAddModal } from "../lib/redux-toolkit/slices/modal-slice";
 import Login from "./Login";
+import useTodoStore from "../lib/zustant";
 
 export default function AddModal() {
-  const { addModal } = useSelector((state) => state.modal);
-  const { user } = useSelector((state) => state.todo);
-  const dispatch = useDispatch();
+  const { user, addModal,setAddModal } = useTodoStore();
 
   function handler() {
-    dispatch(setAddModal());
+    setAddModal();
   }
 
   return user ? (

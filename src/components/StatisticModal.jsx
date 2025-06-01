@@ -5,27 +5,25 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useDispatch, useSelector } from "react-redux";
-import { setStatisticsModal } from "../lib/redux-toolkit/slices/modal-slice";
 import { getStatistics } from "../request";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { Skeleton } from "./ui/skeleton";
 import MyPieChart from "./MyPieChart";
 import { statisticsCount } from "../lib/utils";
+import useTodoStore from "../lib/zustant";
 
 export default function StatisticModal() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { statisticsModal } = useSelector((state) => state.modal);
-  const dispatch = useDispatch();
+  const { setStatisticModal, statisticModal } = useTodoStore();
 
   function handler() {
-    dispatch(setStatisticsModal());
+    setStatisticModal();
   }
 
   useEffect(() => {
-    if (statisticsModal) {
+    if (setStatisticModal) {
       setLoading(true);
       getStatistics()
         .then(
@@ -40,10 +38,10 @@ export default function StatisticModal() {
           setLoading(false);
         });
     }
-  }, [statisticsModal]);
+  }, [statisticModal]);
 
   return (
-    <Dialog open={statisticsModal} onOpenChange={handler}>
+    <Dialog open={statisticModal} onOpenChange={handler}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Statistikani ko'rish</DialogTitle>

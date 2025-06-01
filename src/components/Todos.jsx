@@ -2,26 +2,24 @@ import { toast } from "sonner";
 import { getTodos } from "../request";
 import Loading from "./Loading";
 import Todo from "./Todo";
-import { setData, setLoading } from "../lib/redux-toolkit/slices/todo-slice";
-import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import useTodoStore from "../lib/zustant";
 
 export default function Todos() {
-  const { data, filter, loading, error } = useSelector((state) => state.todo);
-  const dispatch = useDispatch();
+  const { setData, setLoading, loading, error, data, filter } = useTodoStore();
   useEffect(() => {
-    dispatch(setLoading(true));
+    setLoading(true);
     getTodos(filter)
       .then(
         (res) => {
-          dispatch(setData(res));
+          setData(res);
         },
         ({ message }) => {
           toast.error(message);
         }
       )
       .finally(() => {
-        dispatch(setLoading(false));
+        setLoading(false);
       });
   }, [JSON.stringify(filter)]);
 

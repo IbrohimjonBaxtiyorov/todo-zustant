@@ -5,23 +5,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { setFilter } from "../lib/redux-toolkit/slices/todo-slice";
 import { useDispatch } from "react-redux";
 import { Button } from "./ui/button";
 import { ChartNoAxesCombined, PlusCircle } from "lucide-react";
-import {
-  setAddModal,
-  setStatisticsModal,
-} from "../lib/redux-toolkit/slices/modal-slice";
+
+import useTodoStore from "../lib/zustant";
 
 export default function Header() {
-  const dispatch = useDispatch();
+  const { setFilter,setAddModal,setStatisticModal } = useTodoStore();
   function handleFilter(priority) {
-    dispatch(setFilter({ priority }));
+    setFilter({ priority });
   }
 
   function handleClick() {
-    dispatch(setAddModal());
+    setAddModal()
   }
 
   return (
@@ -44,7 +41,7 @@ export default function Header() {
         <Button
           variant={"outline"}
           onClick={() => {
-            dispatch(setStatisticsModal());
+            setStatisticModal()
           }}
         >
           <ChartNoAxesCombined />

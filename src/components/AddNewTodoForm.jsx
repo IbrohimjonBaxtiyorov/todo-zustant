@@ -14,17 +14,12 @@ import { RefreshCcw } from "lucide-react";
 import { validation } from "../lib/utils";
 import { toast } from "sonner";
 import { addTodo } from "../request";
-import { addData, setUser } from "../lib/redux-toolkit/slices/todo-slice";
-import { useDispatch } from "react-redux";
-import { setAddModal } from "../lib/redux-toolkit/slices/modal-slice";
+import useTodoStore from "../lib/zustant";
 
 export default function AddNewTodoForm() {
-  const dispatch = useDispatch();
   const [addLoading, setAddLoading] = useState(false);
   const [sending, setSending] = useState(null);
-
-  console.log(sending);
-
+  const { addData, setUser, setAddModal } = useTodoStore();
   function handleSubmit(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -54,8 +49,8 @@ export default function AddNewTodoForm() {
       addTodo(sending)
         .then(
           (res) => {
-            dispatch(addData(res));
-            dispatch(setAddModal());
+            addData(res);
+            setAddModal();
           },
           ({ message }) => {
             toast.error(message);
@@ -115,7 +110,7 @@ export default function AddNewTodoForm() {
             const yes = confirm("Rostan tizimdan chiqmoqchimisiz?");
             if (yes) {
               toast.success("Xayrlashmadik, kutib qolamiz");
-              dispatch(setUser(null));
+              setUser(null);
             }
           }}
         >
